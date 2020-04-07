@@ -1,21 +1,21 @@
 package controllers
 
 import (
-	"golang-microservices/mvc/services"
-	"strconv"
-	"net/http"
 	"encoding/json"
-	"golang-microservices/mvc/utils"
 	"fmt"
+	"golang-microservices/mvc/services"
+	"golang-microservices/mvc/utils"
+	"net/http"
+	"strconv"
 )
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	userId, err := strconv.ParseInt(r.URL.Query().Get("user_id"), 10, 64)
 	if err != nil {
 		apiErr := &utils.ApplicationError{
-			Message:	fmt.Sprintf("Invalid User Id Sent"),
-			StatusCode:	http.StatusBadRequest,
-			Code:		"Bad Request",
+			Message:    fmt.Sprintf("Invalid User Id Sent"),
+			StatusCode: http.StatusBadRequest,
+			Code:       "Bad Request",
 		}
 		jsonValue, _ := json.Marshal(apiErr)
 		w.WriteHeader(apiErr.StatusCode)
@@ -23,7 +23,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, apiErr := services.GetUser(userId)
+	user, apiErr := services.UsersService.GetUser(userId)
 	if apiErr != nil {
 		jsonValue, _ := json.Marshal(apiErr)
 		w.WriteHeader(apiErr.StatusCode)

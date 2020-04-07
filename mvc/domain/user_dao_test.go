@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetUserNoUser(t *testing.T) {
-	usr, err := GetUser(0)
+	usr, err := UserDao.GetUser(0)
 	assert.Nil(t, usr, "We are not accepting user with ID 0")
 	assert.NotNil(t, err)
 	assert.EqualValues(t, http.StatusNotFound, err.StatusCode)
@@ -17,7 +17,7 @@ func TestGetUserNoUser(t *testing.T) {
 }
 
 func TestGetUserNoError(t *testing.T) {
-	usr, err := GetUser(365341)
+	usr, err := UserDao.GetUser(365341)
 	assert.Nil(t, err, "Success Error stuct should be nil")
 	assert.EqualValues(t, usr.Id, 365341)
 	assert.EqualValues(t, usr.Firstname, "ABHISHEK")
